@@ -1,0 +1,23 @@
+if BEAGLEBOARD
+	config VENDOR_NAME
+		string
+		default "beagleboard"
+
+	config BOARD_NAME
+		string
+		default "beaglev_ahead" if BEAGLEV_AHEAD
+
+	config ARCH
+		string
+		default "riscv" if BEAGLEV_AHEAD
+
+	config TARGET_ARCH
+		string
+		default "riscv64" if BEAGLEV_AHEAD
+
+	config CONFIG_FILE
+		string "config file name for target board"
+		default "beaglev_ahead" if BEAGLEV_AHEAD
+
+endif
+

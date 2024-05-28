@@ -1,0 +1,133 @@
+#!/bin/sh
+. /home/tekkamanninja/development/tekkamanv_sdk/etc/sdk_env.conf
+
+
+TNCON_ERROR=1
+TNCON_SUCCESS=0
+
+TNCON_CONFIG_DIR=$SDK_CONFIG_DIR/tncon.d
+TNCON_RH_CONF_DIR=${TNCON_CONFIG_DIR}/redhat
+#TNCON_PID_FILE=/var/run/{{ rhovpn_pid_file_name }}.pid
+#TNCON_LOG_FILE=/var/log/{{ rhovpn_log_file_name }}.log
+
+WHIPTAIL_TITLE_TNCON="Tekkaman Ninja EZ Connection"
+WHIPTAIL_MENU_CONF="18 40 8"
+#WHIPTAIL_INPUT_CONF="10 60"
+
+_got_cancel() {
+	if [ "${1}" == "" ] ; then
+		echo	Exit!
+		exit 0;
+	fi
+}
+
+_get_target_list() {
+
+cd $TNCON_CONFIG_DIR
+
+_TARGET_LIST_1=`find . -iname *.conf |\
+		sed  's/\.\///g' |\
+		sed  's/\.conf//g' |\
+		sed ':label;N;s/\n/ "" /;t label'`
+
+_TARGET_LIST="$_TARGET_LIST_1 \"\" "
+
+#echo $_TARGET_LIST
+#_TARGET_LIST="RHMAGI ''\
+#	      redhat/rhshdev '' \
+#	      redhat/rhshlabbos '' \
+#	      redhat/sh-el6engrdu2 '' \
+#	      Others/Pan ''"
+
+cd -
+	return 0
+}
+
+_get_connect_type_list() {
+_CONNECT_TYPE_LIST="SSH ''\
+		    console '' \
+		    Web '' \
+		    telnet '' \
+		    quit '' "
+	return 0
+}
+
+_tn_ssh() {
+	if [ -n "$O_OPTS" ]
+	then
+		ssh $SSH_OTHER_OPTS_1 \
+		    -o "$O_OPTS" \
+		    ${SSH_USER}@${DOMAIN_NAME} \
+		    ${SSH_OTHER_OPTS_2}
+	else
+		ssh $SSH_OTHER_OPTS_1 \
+		    ${SSH_USER}@${DOMAIN_NAME} \
+		    ${SSH_OTHER_OPTS_2}
+	fi	
+}
+
+_tn_console() {
+	console -M ${CONSOLE_MASTER} -l $CONSOLE_USER ${CONSOLE_TARGET}
+}
+
+_tn_web() {
+	${DEFAULT_BROWSE} ${PROTOCOL}://${WEB_URL}:${WEB_PORT}
+}
+
+_tn_telnet() {
+	echo TBD
+}
+
+start_connection() {
+	case $1 in
+	  SSH)
+		_tn_ssh
+		;;
+
+	  console)
+		_tn_console
+		;;
+
+	  Web)
+		_tn_web
+		;;
+
+	  telnet)
+		_tn_telnet
+		;;
+
+	  quit)
+		echo 'quit!'
+		exit 0
+		;;
+	  *)
+		echo "please specify the connection you want to use!"
+		exit 1
+	esac
+
+}
+
+_get_target_list
+#sudo yum install newt
+_TARGET=$(whiptail \
+	--title "${WHIPTAIL_TITLE_TNCON}" \
+	--menu "Choose the target" \
+	${WHIPTAIL_MENU_CONF} \
+	${_TARGET_LIST} \
+	3>&1 1>&2 2>&3)
+_got_cancel $_TARGET
+
+_get_connect_type_list
+_CONNECT_TYPE=$(whiptail \
+	--title "${WHIPTAIL_TITLE_TNCON}" \
+	--menu "Choose the connection" \
+	${WHIPTAIL_MENU_CONF} \
+	${_CONNECT_TYPE_LIST} \
+	3>&1 1>&2 2>&3)
+_got_cancel $_CONNECT_TYPE
+
+#echo ${_TARGET}
+source ${TNCON_CONFIG_DIR}/${_TARGET}.conf
+
+start_connection $_CONNECT_TYPE
+

@@ -1,0 +1,79 @@
+menu "Development board vendors selection"
+
+choice VENDOR_SELECTION
+	bool "Development board vendors selection"
+	default SOPHGO
+
+	config SOPHGO
+		bool "Sophgo"
+
+	config THEAD
+		bool "T-Head"
+
+	config BEAGLEBOARD
+		bool "Beagle Board"
+
+	config SIPEED
+		bool "Sipeed"
+
+	config MILKV
+		bool "Milk-V"
+
+	config PINE64
+		bool "PINE64"
+
+	config STARFIVE
+		bool "StarFive"
+
+endchoice
+
+choice BOARD_SELECTION
+	bool "Development boards selection"
+	default SG2042_EVB  if SOPHGO
+	default TH1520_LIGHT if THEAD
+	default BEAGLEV_AHEAD if BEAGLEBOARD
+	default LICHEE_PI_4A if SIPEED
+	default MILKV_PIONEER if MILKV
+	default STAR64 if PINE64
+	default VISIONFIVE_V2 if STARFIVE
+
+	config SG2042_EVB
+		depends on SOPHGO
+		bool "Sophgo SG2042 EVB (SG2042)"
+
+	config TH1520_LIGHT
+		depends on THEAD
+		bool "T-HEAD TH1520 LIGHT EVB"
+
+	config BEAGLEV_AHEAD
+		depends on BEAGLEBOARD
+		bool "Beagle Board Ahead based on TH1520"
+
+	config LICHEE_PI_4A
+		depends on SIPEED
+		bool "Lichee Pi 4A Ahead based on TH1520"
+
+	config MILKV_PIONEER
+		depends on MILKV
+		bool "Milk-V Pioneer board based on Sophgo SG2042"
+
+	config MILKV_DUO
+		depends on MILKV
+		bool "Milk-V Duo board based on Sophgo CV1800B"
+
+	config STAR64
+		depends on PINE64
+		bool "Star64 board based on StarFive JH7110"
+
+	config PINEBOOK_V
+		depends on PINE64
+		bool "Pinebook-V laptop based on StarFive JH7110"
+
+	config VISIONFIVE_V2
+		depends on STARFIVE
+		bool "VisionFive V2 board based on StarFive JH7110"
+endchoice
+
+source "scripts/boards/*/Kconfig"
+
+endmenu

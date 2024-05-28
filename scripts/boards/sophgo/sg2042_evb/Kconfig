@@ -1,0 +1,27 @@
+mainmenu "Sophgo SG2042 EVB build configuration"
+
+config ARCH
+	string
+	default "riscv"
+
+config TARGET_ARCH
+	string
+	default "riscv64"
+
+source "scripts/env/Kconfig"
+
+config BOARD_SUBFIX
+	string "the subfix of sourcecode and install dir"
+	default "_sg2042_evb"
+
+#using the generic Kconfig from components dir
+source "scripts/boards/sophgo/Kconfig.zsbl"
+source "scripts/components/Kconfig.opensbi"
+source "scripts/components/Kconfig.u-boot"
+source "scripts/components/Kconfig.grub"
+source "scripts/components/Kconfig.linux"
+
+#using the target specific Kconfig from boards dir
+source "scripts/boards/Kconfig.image"
+
+source "scripts/boards/sophgo/sg2042_evb/Kconfig.firmware"

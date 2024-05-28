@@ -1,0 +1,15 @@
+menu "SD/flash Image deploy configuration"
+
+config EFI_PATH
+	string "the mount point of the EFI partition of SD card."
+	default "/run/media/tekkamanninja/188A-2D18"
+
+config BOOT_PATH
+	string "the mount point of the BOOT partition of SD card."
+	default "/run/media/tekkamanninja/__boot"
+
+config ROOT_PATH
+	string "the mount point of the ROOT partition of SD card."
+	default "/run/media/tekkamanninja/__"
+
+endmenu

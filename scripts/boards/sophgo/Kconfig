@@ -1,0 +1,15 @@
+if SOPHGO
+	config VENDOR_NAME
+		string
+		default "sophgo"
+
+	config BOARD_NAME
+		string
+		default "sg2042_evb" if SG2042_EVB
+
+	config CONFIG_FILE
+		string "config file name for target board"
+		default "sg2042_evb" if SG2042_EVB
+
+endif
+

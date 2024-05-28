@@ -1,0 +1,61 @@
+menu "Linux kernel build configuration[Generic]"
+
+config LINUX_REPO_PATH
+	string "Linux kernel REPO path"
+	default "src/kernel/linux"
+
+choice LINUX_GIT_REPO
+	bool "Build choice"
+
+config LINUX_GIT_REPO_R
+	bool "Build from Remote REPO"
+
+config LINUX_GIT_REPO_L
+	bool "Build from local branch or commit"
+
+config LINUX_RAW_SRC
+	bool "Build from the source code dir directly"
+
+endchoice
+
+if LINUX_GIT_REPO_R
+
+config LINUX_GIT_REMOTE
+	string "Linux Remote REPO name"
+	default "origin"
+
+config LINUX_GIT_RBRANCH
+	string "The branch we will use in Linux Remote REPO"
+	default "main"
+
+endif
+
+if LINUX_GIT_REPO_L
+
+config LINUX_GIT_LBRANCH
+	string "The branch/commit we will use in local REPO"
+	default "origin"
+
+endif
+
+if LINUX_RAW_SRC
+
+config LINUX_SRC_PATH
+	string "The source code dir for linux kernel"
+	default "path/to/linux/src"
+
+endif
+
+config LINUX_BUILD_IN_TMPFS
+	bool "Build Linux kernel in tmpfs(in RAM)"
+	default n
+
+config LINUX_BUILD_TARGET
+	string "Linux kernel defconfig name"
+	default "riscv64"
+
+config LINUX_INSTALL_SUDO
+	bool "Install Linux with sudo"
+	default n
+
+endmenu

@@ -1,0 +1,23 @@
+if THEAD
+	config VENDOR_NAME
+		string
+		default "thead"
+
+	config BOARD_NAME
+		string
+		default "th1520_light" if TH1520_LIGHT
+
+	config ARCH
+		string
+		default "riscv" if TH1520_LIGHT
+
+	config TARGET_ARCH
+		string
+		default "riscv64" if TH1520_LIGHT
+
+	config CONFIG_FILE
+		string "config file name for target board"
+		default "th1520_light" if TH1520_LIGHT
+
+endif
+

@@ -1,0 +1,4 @@
+mainmenu "Tekkaman SDK main configuration[tekka-setup]"
+
+source "scripts/boards/Kconfig"
+

@@ -1,0 +1,23 @@
+if SIPEED
+	config VENDOR_NAME
+		string
+		default "sipeed"
+
+	config BOARD_NAME
+		string
+		default "lichee_pi_4a" if LICHEE_PI_4A
+
+	config ARCH
+		string
+		default "riscv" if LICHEE_PI_4A
+
+	config TARGET_ARCH
+		string
+		default "riscv64" if LICHEE_PI_4A
+
+	config CONFIG_FILE
+		string "config file name for target board"
+		default "lichee_pi_4a" if LICHEE_PI_4A
+
+endif
+

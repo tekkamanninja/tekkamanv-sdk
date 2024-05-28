@@ -1,0 +1,89 @@
+menu "zsbl build configuration[Sophgo]"
+
+choice ZSBL_CROSS_COMPILE_SELECTION
+	bool "Cross compiler selection"
+	default WITH_DEFAULT_CROSS_COMPILE
+
+config ZSBL_WITH_DEFAULT_CROSS_COMPILE
+	bool "Corss compiler in the distro"
+
+config ZSBL_WITH_CUSTOM_CROSS_COMPILE
+	bool "custom corss compiler"
+
+endchoice
+
+#if ZSBL_WITH_DEFAULT_CROSS_COMPILE
+#
+#endif
+
+if ZSBL_WITH_CUSTOM_CROSS_COMPILE
+
+config ZSBL_CUSTOM_CROSS_COMPILE_DIR
+	string "The custom corss compiler directory/path"
+	default "/usr/bin"
+
+config ZSBL_CUSTOM_CROSS_COMPILE
+	string "The custom corss compiler prefix"
+	default "riscv64-unknown-elf-"
+
+endif
+
+config ZSBL_REPO_PATH
+	string "zsbl REPO path"
+	default "src/firmware/zsbl"
+
+choice ZSBL_GIT_REPO
+	bool "Build choice"
+
+config ZSBL_GIT_REPO_R
+	bool "Build from Remote REPO"
+
+config ZSBL_GIT_REPO_L
+	bool "Build from local branch or commit"
+
+config ZSBL_RAW_SRC
+	bool "Build from the source code dir directly"
+
+endchoice
+
+if ZSBL_GIT_REPO_R
+
+config ZSBL_GIT_REMOTE
+	string "zsbl Remote REPO name"
+	default "origin"
+
+config ZSBL_GIT_RBRANCH
+	string "The branch we will use in zsbl Remote REPO"
+	default "master"
+
+endif
+
+if ZSBL_GIT_REPO_L
+
+config ZSBL_GIT_LBRANCH
+	string "The branch/commit we will use in local REPO"
+	default "master"
+
+endif
+
+if ZSBL_RAW_SRC
+
+config ZSBL_SRC_PATH
+	string "The source code dir for zsbl"
+	default "path/to/zsbl/src"
+
+endif
+
+config ZSBL_BUILD_IN_TMPFS
+	bool "Build zsbl in tmpfs(in RAM)"
+	default n
+
+config ZSBL_BUILD_TARGET
+	string "The target board/Chip we will build for"
+	default "sg2042"
+
+config ZSBL_BUILD_ARGS
+	string "Specifies the build arguments"
+	default " "
+
+endmenu

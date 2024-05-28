@@ -1,0 +1,15 @@
+menu "Firmware deploy configuration"
+
+config FW_ARM_TF_FIP_PATH
+	string "the path of arm-TF fip.bin [BL1+BL2]."
+	default "/home/tekkamanninja/development/tekkamanv_sdk/prebuild/sophgo/sg2042_evb/firmware/fip.bin"
+
+config FW_DTB_PATH
+	string "the path of dtb for SG2042 EVB."
+	default "/home/tekkamanninja/development/tekkamanv_sdk/prebuild/sophgo/sg2042_evb/firmware/*.dtb"
+
+config FW_LINUXBOOT_DIR
+	string "the directory of LinuxBoot binaries for SG2042 EVB."
+	default "/home/tekkamanninja/development/tekkamanv_sdk/prebuild/sophgo/sg2042_evb/firmware/"
+
+endmenu

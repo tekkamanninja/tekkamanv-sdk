@@ -1,0 +1,14 @@
+mainmenu "T-HEAD TH1520 LIGHT build configuration"
+
+source "scripts/env/Kconfig"
+
+config BOARD_SUBFIX
+	string "the subfix of sourcecode and install dir"
+	default "_th1520_light"
+
+#using the generic Kconfig from components dir
+source "scripts/components/Kconfig.linux"
+source "scripts/components/Kconfig.u-boot"
+source "scripts/components/Kconfig.opensbi"
+#using the target specific Kconfig from boards dir
+source "scripts/boards/Kconfig.image"

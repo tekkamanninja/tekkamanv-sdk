@@ -1,0 +1,35 @@
+menu "SD/flash Image build configuration"
+
+config SOPHGO_SG2042_EVB_UENV_PATH
+	string "Pre-build uEnv.txt file path"
+	default "../../prebuild/image_sophgo_sg2042_evb/uEnv.txt"
+
+config SOPHGO_SG2042_EVB_ROOTFS_IMAGE_PATH
+	string "Pre-build rootfs image(ext) path"
+	default "../../prebuild/image_sophgo_sg2042_evb/test.ext4"
+
+config SOPHGO_SG2042_EVB_BOOT_START
+	int "boot partition(vfat) start sector( 512 B/sector ) number."
+	default 4096
+
+config SOPHGO_SG2042_EVB_BOOT_SECTORS
+	int "boot partition(vfat) size(in sectors)."
+	default 466943
+
+config SOPHGO_SG2042_EVB_BOOTLOADER_START
+	int "bootloader partition(raw) start sector( 512 B/sector ) number."
+	default 471040
+
+config SOPHGO_SG2042_EVB_BOOTLOADER_SECTORS
+	int "bootloader partition(raw) size(in sectors)."
+	default 2047
+
+config SOPHGO_SG2042_EVB_ROOTFS_START
+	int "rootfs partition(ext4) start sector( 512 B/sector ) number."
+	default 475136
+
+config SOPHGO_SG2042_EVB_ROOTFS_SECTORS
+	int "rootfs partition(ext4) size(in sectors)."
+	default 466943
+
+endmenu

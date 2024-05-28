@@ -1,0 +1,94 @@
+menu "GRUB build configuration[Generic]"
+
+choice GRUB_CROSS_COMPILE_SELECTION
+	bool "Cross compiler selection"
+	default GRUB_WITH_CUSTOM_CROSS_COMPILE
+
+config GRUB_WITH_DEFAULT_CROSS_COMPILE
+	bool "Corss compiler in the distro"
+
+config GRUB_WITH_CUSTOM_CROSS_COMPILE
+	bool "custom corss compiler"
+
+endchoice
+
+#if GRUB_WITH_DEFAULT_CROSS_COMPILE
+#
+#endif
+
+if GRUB_WITH_CUSTOM_CROSS_COMPILE
+
+config GRUB_CUSTOM_CROSS_COMPILE_DIR
+	string "The custom corss compiler directory/path"
+	default "/usr/bin"
+
+config GRUB_CUSTOM_CROSS_COMPILE
+	string "The custom corss compiler prefix"
+	default "riscv64-linux-gnu-"
+
+endif
+
+config GRUB_REPO_PATH
+	string "GRUB REPO path"
+	default "src/bootloader/grub"
+
+choice GRUB_GIT_REPO
+	bool "Build choice"
+
+config GRUB_GIT_REPO_R
+	bool "Build from Remote REPO"
+
+config GRUB_GIT_REPO_L
+	bool "Build from local branch or commit"
+
+config GRUB_RAW_SRC
+	bool "Build from the source code dir directly"
+
+endchoice
+
+if GRUB_GIT_REPO_R
+
+config GRUB_GIT_REMOTE
+	string "GRUB Remote REPO name"
+	default "origin"
+
+config GRUB_GIT_RBRANCH
+	string "The branch we will use in GRUB Remote REPO"
+	default "main"
+
+endif
+
+if GRUB_GIT_REPO_L
+
+config GRUB_GIT_LBRANCH
+	string "The branch/commit we will use in local REPO"
+	default "main"
+
+endif
+
+
+if GRUB_RAW_SRC
+
+config GRUB_SRC_PATH
+	string "The source code dir for linux kernel"
+	default "path/to/linux/src"
+
+endif
+
+config GRUB_GNULIB_PATH
+	string "The pre-download gunlib repo(for saving time in config stage)"
+	default "/mnt/development/REPOs/gnulib"
+
+config GRUB_BUILD_IN_TMPFS
+	bool "Build GRUB in tmpfs(in RAM)"
+	default n
+
+config GRUB_BUILD_TARGET
+	string "The target board we will build for"
+	default "riscv64"
+
+config GRUB_BUILD_CONFIG
+	string "The configs we will use in build"
+	default "--target=riscv64-linux-gnu --with-platform=efi" if TARGET_ARCH = "riscv64"
+
+endmenu

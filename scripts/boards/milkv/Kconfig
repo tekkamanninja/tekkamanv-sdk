@@ -1,0 +1,25 @@
+if MILKV
+	config VENDOR_NAME
+		string
+		default "milkv"
+
+	config BOARD_NAME
+		string
+		default "milkv_pioneer" if MILKV_PIONEER
+		default "milkv_duo" if MILKV_DUO
+
+	config ARCH
+		string
+		default "riscv" if (MILKV_PIONEER || MILKV_DUO)
+
+	config TARGET_ARCH
+		string
+		default "riscv64" if (MILKV_PIONEER || MILKV_DUO)
+
+	config CONFIG_FILE
+		string "config file name for target board"
+		default "milkv_pioneer" if MILKV_PIONEER
+		default "milkv_duo" if MILKV_DUO
+
+endif
+

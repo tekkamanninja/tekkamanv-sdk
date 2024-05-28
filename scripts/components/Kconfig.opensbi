@@ -1,0 +1,86 @@
+menu "OpenSBI build configuration[Generic]"
+
+config OPENSBI_REPO_PATH
+	string "OpenSBI REPO path"
+	default "src/firmware/opensbi"
+
+choice OPENSBI_GIT_REPO
+	bool "Build choice"
+
+config OPENSBI_GIT_REPO_R
+	bool "Build from Remote REPO"
+
+config OPENSBI_GIT_REPO_L
+	bool "Build from local branch or commit"
+
+config OPENSBI_RAW_SRC
+	bool "Build from the source code dir directly"
+
+endchoice
+
+if OPENSBI_GIT_REPO_R
+
+config OPENSBI_GIT_REMOTE
+	string "OpenSBI Remote REPO name"
+	default "origin"
+
+config OPENSBI_GIT_RBRANCH
+	string "The branch we will use in OpenSBI Remote REPO"
+	default "master"
+
+endif
+
+if OPENSBI_GIT_REPO_L
+
+config OPENSBI_GIT_LBRANCH
+	string "The branch/commit we will use in local REPO"
+	default "master"
+
+endif
+
+if OPENSBI_RAW_SRC
+
+config OPENSBI_SRC_PATH
+	string "The source code dir for OpenSBI"
+	default "path/to/opensbi/src"
+
+endif
+
+choice OPENSBI_PLATFORM
+	bool "platform choice"
+	default OPENSBI_PLATFORM_GENERIC
+
+config OPENSBI_PLATFORM_GENERIC
+	bool "Build generic platform"
+
+config OPENSBI_PLATFORM_SOC
+	bool "Build platform/vendor/<board|soc>"
+
+endchoice
+
+config OPENSBI_BUILD_IN_TMPFS
+	bool "Build OpenSBI in tmpfs(in RAM)"
+	default n
+
+config OPENSBI_BUILD_PLATFORM
+	string "Specifies the platform which will be built"
+	default "sophgo/sg2042" if OPENSBI_PLATFORM_SOC
+	default "generic" if OPENSBI_PLATFORM_GENERIC
+
+config OPENSBI_BUILD_TARGET
+	string "The target board/Chip we will build for"
+	default "th1520"
+
+config OPENSBI_BUILD_ARGS
+	string "Specifies the build arguments"
+	default "BUILD_INFO=y"
+
+config OPENSBI_PREBUILD_UBOOT_BIN
+	string "Pre-build U-boot Bin path"
+	default "../../../output/firmware/u-boot_sophgo_sg2042_evb/u-boot.bin"
+
+config OPENSBI_PREBUILD_DTB
+	string "Pre-build dtb path"
+	default "../../../output/firmware/u-boot_sophgo_sg2042_evb/u-boot.dtb"
+
+endmenu
