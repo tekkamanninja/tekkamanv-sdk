@@ -1,0 +1,7 @@
+menu "SD/flash Image build configuration"
+
+config DEEPCOMPUTING_ROMA_ROOTFS_SIZE
+	int "rootfs partition(ext4) size(1M)."
+	default 8000
+
+endmenu

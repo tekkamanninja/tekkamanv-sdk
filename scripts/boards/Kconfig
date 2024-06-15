@@ -25,6 +25,8 @@ choice VENDOR_SELECTION
 	config STARFIVE
 		bool "StarFive"
 
+	config DEEPCOMPUTING
+		bool "DeepComputing"
 endchoice
 
 choice BOARD_SELECTION
@@ -36,6 +38,7 @@ choice BOARD_SELECTION
 	default MILKV_PIONEER if MILKV
 	default STAR64 if PINE64
 	default VISIONFIVE_V2 if STARFIVE
+	default ROMA if DEEPCOMPUTING
 
 	config SG2042_EVB
 		depends on SOPHGO
@@ -72,6 +75,10 @@ choice BOARD_SELECTION
 	config VISIONFIVE_V2
 		depends on STARFIVE
 		bool "VisionFive V2 board based on StarFive JH7110"
+
+	config ROMA
+		depends on DEEPCOMPUTING
+		bool "ROMA laptop based on StarFive JH7110"
 endchoice
 
 source "scripts/boards/*/Kconfig"
