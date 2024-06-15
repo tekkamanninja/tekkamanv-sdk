@@ -1,0 +1,5 @@
+$(__SDK_BUILD_TARGET_PREFIX)_BIN_PATH := $(SDK_PREBUILD_DIR)/$(shell echo $(CONFIG_VENDOR_NAME))/$(shell echo $(CONFIG_BOARD_NAME))
+
+$(__SDK_BUILD_TARGET_PREFIX)_firmware_deploy:
+	echo $($(__SDK_BUILD_TARGET_PREFIX)_BIN_PATH)
+

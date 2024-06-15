@@ -1,0 +1,11 @@
+mainmenu "ROMA laptop build configuration"
+
+source "scripts/env/Kconfig"
+
+config BOARD_SUBFIX
+	string "the subfix of sourcecode and install dir"
+	default "_roma"
+
+#using the generic Kconfig from components dir
+source "scripts/components/Kconfig.linux"
+source "scripts/boards/deepcomputing/roma/Kconfig.image"
